@@ -118,8 +118,8 @@ class AIScoreboard { //extends Scoreboard {
     void printFinalScorecardForGameDiceAI() {
         int AIFinalScore;
 
-        System.out.println("Computer's Game Over!");
-        System.out.println("***AI's Final Scorecard***");
+        PrintWithColor.brightMagenta("Computer's Game Over!");
+        PrintWithColor.brightCyan("***AI's Final Scorecard***");
         String finalScorecard = generateScorecardAI(AIscores);
         System.out.println(finalScorecard);
         AIFinalScore = totalScoreAI;

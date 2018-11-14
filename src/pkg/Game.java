@@ -43,7 +43,7 @@ public class Game {
         }
     }
 
-    private void checkHoldAI() { //TODO: Don't use random choice
+    private void checkHoldAI() {
         Random randomNum = new Random();
         for (int i = 0; i < gameDice.diceInContainer(); i++) {
             int decision = randomNum.nextInt(2);
