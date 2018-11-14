@@ -32,7 +32,7 @@ public class PrintWithColor {
     private static final String BRIGHT_WHITE = "\u001b[37;1m";
 
     //experimentals
-
+    private static final String ORANGE = "\u001b[38;5;${206}m";
 
 
     static void black (String input){
@@ -97,6 +97,15 @@ public class PrintWithColor {
 
     static void brightWhite (String input){
         System.out.println(BRIGHT_WHITE + input+ ANSI_RESET);
+    }
+
+
+    /**
+     * EXPERIMENTALS DOWN HERE!
+     */
+    static void orange (String input){
+        System.out.println(ORANGE + input+ ANSI_RESET);
+
     }
 
 }
