@@ -1,6 +1,6 @@
 package pkg;
 
-class AIScoreboard extends Scoreboard {
+class AIScoreboard {
     private int totalScoreAI;
     private Score[] AIscores = new Score[13];
 
