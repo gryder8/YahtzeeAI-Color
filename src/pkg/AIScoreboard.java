@@ -44,7 +44,6 @@ class AIScoreboard { //extends Scoreboard {
         PrintWithColor.brightGreen("AI chose " + AIscores[scoreChoiceIndex].getName() + " and scored " + AIscores[scoreChoiceIndex].getValue() + " points.");
     }
 
-    @SuppressWarnings("Duplicates")
     Score[] getTempScoresFromValuesAI(int[] diceValues) {
         Score[] tempScoresAI = new Score[13];
         if (!AIscores[0].getIsUsed()) {
