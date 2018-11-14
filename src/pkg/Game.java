@@ -244,7 +244,7 @@ public class Game {
             }
         }
         if (!playerScoreboard.isBoardFilled()) {
-            System.out.println("***YOUR TURN!***");
+            PrintWithColor.yellow("***YOUR TURN!***");("***YOUR TURN!***");
             playRound();
         }
     }
