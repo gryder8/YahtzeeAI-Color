@@ -57,7 +57,6 @@ class Scoreboard {
         setup();
     }
 
-    @SuppressWarnings("Duplicates")
     private Score[] getTempScoresFromValues(int[] diceValues) {
         Score[] tempScores = new Score[13];
         if (!scores[0].getIsUsed()) {
