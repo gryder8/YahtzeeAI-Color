@@ -1,6 +1,6 @@
 package pkg;
 
-class AIScoreboard { //extends Scoreboard {
+class AIScoreboard extends Scoreboard {
     private int totalScoreAI;
     private Score[] AIscores = new Score[13];
 
@@ -163,6 +163,7 @@ class AIScoreboard { //extends Scoreboard {
         for (int i = 0; i < creationArray.length; i++) {
             if (creationArray[i] != null) {
                 if (creationArray[i].getValue() > maxScore) {
+                    maxScore = creationArray[i].getValue();
                     maxScoreIndex = i;
                 }
             }
