@@ -41,7 +41,7 @@ class AIScoreboard { //extends Scoreboard {
     void setScoreforAllDiceAI(AllDice gameDice, int scoreChoiceIndex) {
         int[] diceValues = gameDice.getDiceValues();
         AIscores[scoreChoiceIndex].setDiceValuesForScoring(diceValues);
-        PrintWithColor.brightWhite("AI chose " + AIscores[scoreChoiceIndex].getName() + " and scored " + AIscores[scoreChoiceIndex].getValue() + " points.");
+        PrintWithColor.brightGreen("AI chose " + AIscores[scoreChoiceIndex].getName() + " and scored " + AIscores[scoreChoiceIndex].getValue() + " points.");
     }
 
     @SuppressWarnings("Duplicates")
@@ -130,11 +130,11 @@ class AIScoreboard { //extends Scoreboard {
         System.out.println("AI's Score: " + AIFinalScore);
 
         if (Scoreboard.getFinalPlayerScore() > AIFinalScore) {
-            System.out.println("You won!");
+            PrintWithColor.brightGreen("You won!");
         } else if (Scoreboard.getFinalPlayerScore() == AIFinalScore) {
-            System.out.println("Game is a tie!!!");
+            PrintWithColor.brightYellow("Game is a tie!!!");
         } else {
-            System.out.println("You lost! Better luck next time.");
+            PrintWithColor.brightRed("You lost! Better luck next time.");
         }
     }
 
