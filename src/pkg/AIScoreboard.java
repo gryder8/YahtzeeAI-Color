@@ -122,7 +122,7 @@ class AIScoreboard {
         String finalScorecard = generateScorecardAI(AIscores);
         System.out.println(finalScorecard);
         AIFinalScore = totalScoreAI;
-        System.out.println("AI's final score is " + totalScoreAI + " points!");
+        PrintWithColor.brightYellow("AI's final score is " + totalScoreAI + " points!");
         System.out.println(""); //whitespace
 
         System.out.println("Your Score: " + Scoreboard.getFinalPlayerScore());
