@@ -17,12 +17,12 @@ package pkg;
     private int currentValue;
     private boolean held = false;
 
-     Die() { //each Die is rolled when rollAll() is called
-        numSides = 6; // default
+     Die() { //each Die object is rolled when rollAll() is called
+        numSides = 6; // default constructor
     }
 
      Die(int sides) { //each Die is rolled when rollAll() is called
-        numSides = sides;  // can set the number of sides;
+        numSides = sides;  // can set the number of sides
     }
 
      Die (int sides, int initialValue) {
@@ -54,10 +54,10 @@ package pkg;
 
      void hold() { //setter
         this.held = true;
-    }
+    } //set the local instance boolean held to true
 
      void release() { //setter
         this.held = false;
-    }
+    } //set the local instance boolean held to false
 
 }

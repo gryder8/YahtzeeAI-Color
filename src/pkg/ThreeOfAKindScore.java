@@ -19,9 +19,9 @@ public class ThreeOfAKindScore extends Score {
     }
 
     private int calculateScore(int[] diceCount) {
-        for (int diceValue : diceCount) {
+        for (int diceValue : diceCount) { //check how many times any 1 dice values is in the diceCount array
             if (diceValue >= 3) {
-                return sumValues(myDiceValues);
+                return sumValues(myDiceValues); //return the sum of the dice if condition is true
             }
         }
         return 0;
