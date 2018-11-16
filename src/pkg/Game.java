@@ -1,16 +1,16 @@
 package pkg;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.Random; //for AI holding "decision"
+import java.util.Scanner; //for user input
 
 public class Game {
 
     //INSTANCE VARIABLES
     //CONSTRUCTORS
-    private Scoreboard playerScoreboard = new Scoreboard();
-    private AIScoreboard AIScoreboard = new AIScoreboard();
+    private Scoreboard playerScoreboard = new Scoreboard(); //player's scoreboard
+    private AIScoreboard AIScoreboard = new AIScoreboard(); //AI's scoreboard
 
-    private AllDice gameDice = new AllDice();
+    private AllDice gameDice = new AllDice(); //gameDice object
 
     /**
      * INSTANCE METHODS
@@ -22,10 +22,10 @@ public class Game {
         }
     }
 
-    private void checkHold() { //ask the user
+    private void checkHold() { //ask the user what dice they want to hold, whilst forcing a valid input
         char userChoice = ' ';
         boolean done;
-        for (int i = 0; i < gameDice.diceInContainer(); i++) {
+        for (int i = 0; i < gameDice.diceInContainer(); i++) { //walk through each dice
             PrintWithColor.brightYellow("Would you like to hold Die #" + (i + 1) + "? (y/n) [Value:" + gameDice.getSpecificValueOfDice(i) + "]");
             done = false;
             while (!done) {
@@ -43,7 +43,7 @@ public class Game {
         }
     }
 
-    private void checkHoldAI() {
+    private void checkHoldAI() { //AI randomly decides what dice to hold
         Random randomNum = new Random();
         for (int i = 0; i < gameDice.diceInContainer(); i++) {
             int decision = randomNum.nextInt(2);
@@ -56,7 +56,7 @@ public class Game {
     }
 
 
-    private int getNumFromUser() {
+    private int getNumFromUser() { //forces user to input a valid int
         int userNum;
         Scanner userNumberInput = new Scanner(System.in);
         while (!userNumberInput.hasNextInt()) {
@@ -68,7 +68,7 @@ public class Game {
         return userNum;
     }
 
-    private char getCharFromUser() {
+    private char getCharFromUser() { //forces user to input a valid char
         char userChar = ' ';
         Scanner userCharInput = new Scanner(System.in);
         while (!userCharInput.hasNextLine()) {
@@ -81,7 +81,7 @@ public class Game {
     }
 
 
-    private boolean keepRolling() {
+    private boolean keepRolling() { //get a valid user input and return it [validation mostly handled by getCharFromUser()]
         char userChoice = ' ';
         boolean done = false;
         PrintWithColor.blue("Would you like to roll again (y/n)?");
@@ -96,9 +96,9 @@ public class Game {
         return userChoice == 'y';
     }
 
-    private boolean AIKeepRolling() {
+    private boolean AIKeepRolling() { //AI will roll until the sum of all the possible scores is greater than 30
         int AITotalScoreForRoll = AIScoreboard.getTotalScoreOfRollForAI(AIScoreboard.getTempScoresFromValuesAI(gameDice.getDiceValues()));
-        if (AITotalScoreForRoll >= 40) { //possible addition: change threshold based on chosen difficulty
+        if (AITotalScoreForRoll >= 30) { //30 is optimal
             return false;
         }
         return true;
@@ -112,7 +112,7 @@ public class Game {
         return "AI rolled: " + gameDice.toString().substring(0, gameDice.toString().length() - 1); //return dice values without end comma
     }
 
-    private int getUserScoreChoice() {
+    private int getUserScoreChoice() { //get a valid user input and return it [validation mostly handled by getNumFromUser()]
         int userChoice = 0;
         boolean done = false;
         System.out.println("Input the number of your score choice.");
@@ -129,15 +129,16 @@ public class Game {
         return userChoice;
     }
 
-    private int AIScoreChoice() {
-        int highestValueIndex = AIScoreboard.getHighestScoreIndex(AIScoreboard.getTempScoresFromValuesAI(gameDice.getDiceValues()));
+    private int AIScoreChoice() { //run through the array and find the most valuable index, then return that index
+        int highestValueIndex = 0;
+        highestValueIndex = AIScoreboard.getHighestScoreIndex(AIScoreboard.getTempScoresFromValuesAI(gameDice.getDiceValues()));
         while (!AIScoreboard.isAIScoreChoiceAvailable(highestValueIndex)) {
             highestValueIndex++;
         }
         return highestValueIndex;
     }
 
-    private void calculateScoreboard() {
+    private void calculateScoreboard() { //print options and ask for input
         System.out.println("");
         playerScoreboard.printTemporaryScorecardForGameDice(gameDice);
         playerScoreboard.setScoreForAllDice(gameDice, getUserScoreChoice());
@@ -145,7 +146,7 @@ public class Game {
     }
 
 
-    private void calculateAIScoreboard() {
+    private void calculateAIScoreboard() { //take in the AI's pre-validated choice then show the AI's scorecard
         AIScoreboard.setScoreforAllDiceAI(gameDice, AIScoreChoice());
         AIScoreboard.printCurrentScorecardForGameDiceAI();
     }
@@ -155,8 +156,8 @@ public class Game {
         int rollsRemaining;
         boolean rollAgain;
         rollsRemaining = 3;
-        releaseAllDice();
-        while (!playerScoreboard.isBoardFilled()) {
+        releaseAllDice(); //activate all the dice
+        while (!playerScoreboard.isBoardFilled()) { //only runs when board is not full
             gameDice.rollAll();
             rollsRemaining--;
             PrintWithColor.green(outputDiceValues());
@@ -164,48 +165,48 @@ public class Game {
                 System.out.println("(" + rollsRemaining + " rolls remaining)");
                 System.out.println("");
                 rollAgain = keepRolling();
-                if (!rollAgain) {
+                if (!rollAgain) { //if they choose no
                     PrintWithColor.purple("You ended your turn. Choose your score.");
                     calculateScoreboard();
                     rollsRemaining = 3;
                     releaseAllDice();
-                    if (playerScoreboard.isBoardFilled()) {
+                    if (playerScoreboard.isBoardFilled()) { //check if the player's board is full
                         playerScoreboard.printFinalScorecardForGameDice();
                     }
-                    if (!AIScoreboard.isBoardFilledAI()) {
+                    if (!AIScoreboard.isBoardFilledAI()) { //check if the AI's board is full; if not then rotate turns
                         PrintWithColor.yellow("***COMPUTER'S TURN!***");
                         AIRound();
                     }
-                } else {
+                } else { //if the player's turn is not over, ask what dice they want to hold
                     checkHold();
                 }
-            } else if (rollsRemaining == 0) {
+            } else if (rollsRemaining == 0) { //player out of rolls; force them to choose score
                 PrintWithColor.purple("No more rolls remaining. Choose your score.");
                 calculateScoreboard();
                 rollsRemaining = 3;
                 releaseAllDice();
-                if (playerScoreboard.isBoardFilled()) {
+                if (playerScoreboard.isBoardFilled()) { //check if the player's board is full
                     playerScoreboard.printFinalScorecardForGameDice();
                 }
-                if (!AIScoreboard.isBoardFilledAI()) {
+                if (!AIScoreboard.isBoardFilledAI()) { //if AI board is not full, rotate turns
                     PrintWithColor.yellow("***COMPUTER'S TURN!***");
                     AIRound();
                 }
             }
         }
-        if (!AIScoreboard.isBoardFilledAI()) {
+        if (!AIScoreboard.isBoardFilledAI()) { //final check
             PrintWithColor.yellow("***COMPUTER'S TURN!***");
             AIRound();
         }
     }
 
 
-    private void AIRound() {
+    private void AIRound() { //similar to player loop but incorporates some different methods
         System.out.println("");
         int rollsRemainingAI;
         boolean rollAgainAI;
         rollsRemainingAI = 3;
-        releaseAllDice();
+        releaseAllDice(); //activate all dice
         while (!AIScoreboard.isBoardFilledAI()) {
             gameDice.rollAll();
             rollsRemainingAI--;
@@ -219,10 +220,10 @@ public class Game {
                     calculateAIScoreboard();
                     rollsRemainingAI = 3;
                     releaseAllDice();
-                    if (AIScoreboard.isBoardFilledAI()) {
+                    if (AIScoreboard.isBoardFilledAI()) { //check if the AI has a full scoreboard
                         AIScoreboard.printFinalScorecardForGameDiceAI();
                     }
-                    if (!playerScoreboard.isBoardFilled()) {
+                    if (!playerScoreboard.isBoardFilled()) { //rotate turns if the player's scoreboard is not full
                         PrintWithColor.yellow("***YOUR TURN!***");
                         playRound();
                     }
@@ -234,23 +235,23 @@ public class Game {
                 calculateAIScoreboard();
                 rollsRemainingAI = 3;
                 releaseAllDice();
-                if (AIScoreboard.isBoardFilledAI()) {
+                if (AIScoreboard.isBoardFilledAI()) { //check if the AI has a full scoreboard
                     AIScoreboard.printFinalScorecardForGameDiceAI();
                 }
-                if (!playerScoreboard.isBoardFilled()) {
+                if (!playerScoreboard.isBoardFilled()) { //rotate turns if the player's scoreboard is not full
                     PrintWithColor.yellow("***YOUR TURN!***");
                     playRound();
                 }
             }
         }
-        if (!playerScoreboard.isBoardFilled()) {
-            PrintWithColor.yellow("***YOUR TURN!***");("***YOUR TURN!***");
+        if (!playerScoreboard.isBoardFilled()) { //final check
+            PrintWithColor.yellow("***YOUR TURN!***");
             playRound();
         }
     }
 
-    public static void main(String[] args) {
-        Game newGame = new Game();
+    public static void main(String[] args) { //initiates the game (MUST BE PUBLIC)
+        Game newGame = new Game(); //create a new game object to call playRound() on
         newGame.playRound(); //rest of the game is handled from here
     }
 }

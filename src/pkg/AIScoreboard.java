@@ -20,7 +20,7 @@ class AIScoreboard {
 
     AIScoreboard() {
         setupAI();
-    }
+    } //constructor to initialize object array
 
     private void setupAI() { //create the array of the AI's Score objects
         AIscores[0] = AIones;
@@ -38,7 +38,7 @@ class AIScoreboard {
         AIscores[12] = AIyahtzee;
     }
 
-    void setScoreforAllDiceAI(AllDice gameDice, int scoreChoiceIndex) {
+    void setScoreforAllDiceAI(AllDice gameDice, int scoreChoiceIndex) { //pass the AI's validated score choice into the current scorecard
         int[] diceValues = gameDice.getDiceValues();
         AIscores[scoreChoiceIndex].setDiceValuesForScoring(diceValues);
         PrintWithColor.brightGreen("AI chose " + AIscores[scoreChoiceIndex].getName() + " and scored " + AIscores[scoreChoiceIndex].getValue() + " points.");
@@ -114,7 +114,7 @@ class AIScoreboard {
         return tempScoresAI;
     } //if a space is not used, calculate its possible score and build it into an array of Score objects
 
-    void printFinalScorecardForGameDiceAI() {
+    void printFinalScorecardForGameDiceAI() { //game ends on AI's turn
         int AIFinalScore;
 
         PrintWithColor.brightMagenta("Computer's Game Over!");
@@ -125,10 +125,10 @@ class AIScoreboard {
         PrintWithColor.brightYellow("AI's final score is " + totalScoreAI + " points!");
         System.out.println(""); //whitespace
 
-        System.out.println("Your Score: " + Scoreboard.getFinalPlayerScore());
-        System.out.println("AI's Score: " + AIFinalScore);
+        System.out.println("Your Score: " + Scoreboard.getFinalPlayerScore()); //output player's final score
+        System.out.println("AI's Score: " + AIFinalScore); //output computer's final score
 
-        if (Scoreboard.getFinalPlayerScore() > AIFinalScore) {
+        if (Scoreboard.getFinalPlayerScore() > AIFinalScore) { //decide the winner
             PrintWithColor.brightGreen("You won!");
         } else if (Scoreboard.getFinalPlayerScore() == AIFinalScore) {
             PrintWithColor.brightYellow("Game is a tie!!!");
@@ -157,40 +157,40 @@ class AIScoreboard {
         return AIscoreString;
     }
 
-    int getHighestScoreIndex(Score[] creationArray) {
+    int getHighestScoreIndex(Score[] creationArray) { //find the most valuable index
         int maxScoreIndex = 0;
         int maxScore = 0;
         for (int i = 0; i < creationArray.length; i++) {
             if (creationArray[i] != null) {
                 if (creationArray[i].getValue() > maxScore) {
-                    maxScore = creationArray[i].getValue();
-                    maxScoreIndex = i;
+                    maxScore = creationArray[i].getValue(); //update the score to beat to the one in that index
+                    maxScoreIndex = i; //set the index to the current max index
                 }
             }
         }
         return maxScoreIndex;
     }
 
-    int getTotalScoreOfRollForAI(Score[] creationArray) {
+    int getTotalScoreOfRollForAI(Score[] creationArray) { //gets the total possible score of the AI's roll; used to determine if the AI should keep rolling
         int tempScore = 0;
         for (int i = 0; i < creationArray.length; i++) {
-            if (creationArray[i] != null) { //make sure to avoid NPE by checking if the object has been removed b/c it's taken (making that index null)
+            if (creationArray[i] != null) { //avoids NPE by checking if the object has been removed b/c it's taken (making that index null)
                 tempScore += creationArray[i].getValue();
             }
         }
         return tempScore;
     }
 
-    boolean isAIScoreChoiceAvailable(int ScoreChoiceIndex) {
+    boolean isAIScoreChoiceAvailable(int ScoreChoiceIndex) { //make sure the AI chooses an availible index
         if (AIscores[ScoreChoiceIndex].getIsUsed()) {
             return false;
         }
         return true;
     }
 
-    boolean isBoardFilledAI() {
+    boolean isBoardFilledAI() { //check to see if the board is filled by walking through the array and using .getIsUsed()
         for (int i = 0; i < AIscores.length; i++) {
-            if (!AIscores[i].getIsUsed()) {
+            if (!AIscores[i].getIsUsed()) { //check if an element in the array is not used
                 return false;
             }
         }

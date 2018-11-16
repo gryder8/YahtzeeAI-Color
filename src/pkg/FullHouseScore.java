@@ -10,7 +10,7 @@ public class FullHouseScore extends Score {
 		return diceCount;
 	}
 	
-	private int calculateScore(int[] values) {
+	private int calculateScore(int[] values) { //return 40 if there any two places hold 2 and 3, respectively
 		boolean hasTwo = false;
 		boolean hasThree = false;
 		for (int item : values){

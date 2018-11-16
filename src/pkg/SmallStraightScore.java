@@ -15,10 +15,10 @@ public class SmallStraightScore extends Score {
 		for (int i = 0; i<values.length-1; i++){
 			if (values[i] >= 1){
 				counter++;
-			} else if (values[i] == 0 && i!=LAST_ARRAY_PLACE){
+			} else if (values[i] == 0 && i!=LAST_ARRAY_PLACE){ //if the value is 0 and it's not in the last array place, a small straight is not possible
 				return 0;
 			}
-			if (counter >= 4){
+			if (counter >= 4){ //also returns true if a large straight occurs
 				return 30;
 			}
 		}
@@ -30,6 +30,6 @@ public class SmallStraightScore extends Score {
 	}
 
 	public int getValue(){
-		return calculateScore(tallyAllValues(myDiceValues));
+		return calculateScore(tallyAllValues(myDiceValues)); //tally the values, calculate them, then return them
 	}
 }

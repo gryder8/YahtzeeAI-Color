@@ -11,11 +11,11 @@ public class LargeStraightScore extends Score {
 
 	private int calculateScore(int[] values) {
 		int counter = 0;
-		for (int i = 0; i<values.length-1; i++){
+		for (int i = 0; i<values.length-1; i++){ //5 dice, 6 value possibilities
 			if (values[i] == 1){
 				counter ++;
 			}
-			else {
+			else { //if any index is 0 or greater than 1, the user cannot have a large straight
 				return 0;
 			}
 		}
@@ -32,5 +32,5 @@ public class LargeStraightScore extends Score {
 
 	public int getValue(){
 		return calculateScore(tallyAllValues(myDiceValues));
-	}
+	} //tally the values, calculate them, then return them
 }
