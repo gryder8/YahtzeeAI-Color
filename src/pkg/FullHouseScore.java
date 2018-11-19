@@ -21,7 +21,7 @@ public class FullHouseScore extends Score {
 			}
 		}
 		if (hasThree && hasTwo){
-			return 40;
+			return 25;
 		}
 		return 0;
 	}
